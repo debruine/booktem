@@ -14,3 +14,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 URL: https://github.com/debruine/booktem
 BugReports: https://github.com/debruine/booktem/issues
+Imports: 
+    glue,
+    quarto

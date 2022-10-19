@@ -1,24 +1,13 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
 
 # booktem
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of booktem is to make the creation of methods books quick and easy. 
+The goal of booktem is to make the creation of methods books quick and
+easy.
 
 ## Installation
 
@@ -32,7 +21,7 @@ devtools::install_github("debruine/booktem")
 
 Set up a book template:
 
-```{r eval = FALSE}
+``` r
 library(booktem)
 
 create_book(path = "demobook", 
@@ -42,7 +31,7 @@ create_book(path = "demobook",
 
 Set up a custom red, white and blue stripe on the top of the book.
 
-```{r, eval = FALSE}
+``` r
 stripe_colors <- c(red = "red",
                    white = "white",
                    blue = "blue")
@@ -53,5 +42,3 @@ create_book(path = "demobook",
             author = "My Name",
             stripe_css = stripe_css)
 ```
-
-

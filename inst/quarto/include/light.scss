@@ -1,0 +1,21 @@
+/*-- scss:defaults --*/
+$link-color: #248CFC;
+
+/*-- scss:rules --*/
+.dark-mode,
+.dark-light .cell-output-display figure,
+.dark-light .cell-output-display img
+{ display: none; }
+
+.light-mode,
+.dark-light .cell-output-display + .cell-output-display figure ,
+.dark-light .cell-output-display + .cell-output-display img
+{ display: block; }
+
+a.glossary, a:visited.glossary {
+  color: #61589C !important;
+}
+
+.terminal {
+  border-color: #D6DADC;
+}

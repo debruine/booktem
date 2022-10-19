@@ -1,0 +1,64 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "{title}"
+  author: "{author}"
+  #description: "{description}"
+  cover-image: images/logos/logo.png
+  image: images/logos/logo.png
+  fav-icon: images/logos/favicon.ico
+  cookie-consent: false
+  google-analytics: "{google_analytics}"
+  page-navigation: true
+  search: true
+  # comments:
+  #   hypothesis:
+  #     theme: clean
+  #     openSidebar: false
+  repo-url: https://github.com/{repo_url}
+  repo-branch: {repo_branch}
+  repo-actions: [{repo_actions}]
+  downloads: [{downloads}]
+  sharing: [{sharing}]
+  # sidebar:
+  #   style: docked
+  #   background: light
+  page-footer:
+    left: "{footer}"
+    right:
+      - icon: github
+        href: https://github.com/{repo_url}
+      - icon: twitter
+        href: https://twitter.com/{twitter}
+  chapters:
+  - index.qmd
+  appendices:
+  - references.qmd
+
+bibliography: include/references.bib
+csl: include/apa.csl
+nocite: |
+  @*
+
+format:
+  html:
+    theme:
+      light:
+      - {light_theme}
+      - include/light.scss
+      dark:
+      - {dark_theme}
+      - include/dark.scss
+    css: [include/booktem.css, include/style.css]
+    df-print: kable
+    code-link: true
+    code-fold: false
+    code-line-numbers: true
+    code-overflow: wrap
+    code-copy: hover
+    highlight-style: a11y
+    # monofont: Fira Code
+    # mainfont: Open Sans
+    include-after-body: include/script.js

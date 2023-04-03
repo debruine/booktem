@@ -2,28 +2,36 @@
 #'
 #' @param path path to the location for your book on your machine
 #' @param title title of the book
+#' @param subtitle subtitle of the book
 #' @param author author of the book
 #' @param description short description of the book
+#' @param output_dir directory to render output to
 #' @param license what license to add (CC-BY only for now)
 #' @param google_analytics the google analytics address
-#' @param twitter the twitter adddress
+#' @param twitter the twitter address
 #' @param repo_url the github repo URL (e.g., "myusername/mybook")
 #' @param repo_branch the branch to use (usually "main" or "master")
 #' @param repo_actions github repo links to add to the right sidebar
 #' @param downloads download types to include
 #' @param sharing "twitter, facebook, linkedin"
+#' @param margin_header defaults to ""
 #' @param footer defaults to "license YEAR, author"
 #' @param light_theme "flatly"
 #' @param dark_theme "darkly"
 #' @param stripe_css created by stripe() function
+#' @param df_print how to print tables (default, kable, tibble, paged)
+#' @param webexercises whether to use webexercises for interactive exercises
+#' @param open whether to activate the new project in RStudio
 #'
 #' @return sets up a project and renders the demo
 #' @export
 #'
 create_book <- function(path = "book",
                         title = "Book Template",
+                        subtitle = "Quarto Textbooks Made Easy",
                         author = "Me",
-                        description = "",
+                        description = "Book Description",
+                        output_dir = "docs",
                         license = "CC-BY",
                         google_analytics = "",
                         twitter = "",
@@ -32,35 +40,91 @@ create_book <- function(path = "book",
                         repo_actions = "edit, issue, source",
                         downloads = "pdf, epub",
                         sharing = "twitter, facebook, linkedin",
+                        margin_header = "",
                         footer = paste(license, format(Sys.Date(), "%Y"), ",", author),
                         light_theme = "flatly",
                         dark_theme = "darkly",
-                        stripe_css = stripes()) {
-  usethis::create_project(path, FALSE, FALSE)
+                        stripe_css = stripes(),
+                        df_print = "kable",
+                        webexercises = TRUE,
+                        open = rlang::is_interactive()) {
+  # checks (TODO) ----
+  # prompt quarto install if not available
+  # https://quarto.org/docs/get-started/
+  required_pkgs <- c(quarto = TRUE, knitr = TRUE)
+  if (webexercises) required_pkgs[webexercises] <- TRUE
 
-  # create _quarto.yml
+  # create project -----
+  usethis::ui_todo("Creating project...")
+  op <- utils::capture.output({
+    usethis::create_project(path = path,
+                            rstudio = FALSE,
+                            open = FALSE)
+  }, type = "message")
+
+  # add content ----
+  usethis::ui_todo("Adding content...")
+
+  ## create _quarto.yml ----
   file <- system.file("quarto", "_quarto.yml", package = "booktem")
   template <- paste(readLines(file), collapse = "\n")
   quarto_yml <- glue::glue(template)
   write(quarto_yml, file.path(path, "_quarto.yml"))
 
-  # add license
+  ## add license ----
   if (license == "CC-BY") {
-    xfun::in_dir(path, usethis::use_ccby_license())
+    license_op <- utils::capture.output({
+      xfun::in_dir(path, usethis::use_ccby_license())
+    }, type = "message")
   }
 
-  # copy files
-  index <- system.file("quarto", "index.qmd", package = "booktem")
-  file.copy(index, file.path(path))
-  refs <- system.file("quarto", "references.qmd", package = "booktem")
-  file.copy(refs, file.path(path))
+  ## copy qmd files ----
+  qmd <- list.files(system.file("quarto", package = "booktem"),
+                    "\\.qmd$",
+                    full.names = TRUE)
+  sapply(qmd, file.copy, path)
 
-  # includes
+  ## includes and R directories ----
   include <- system.file("quarto/include", package = "booktem")
   file.copy(include, file.path(path), recursive = TRUE)
-  write(stripe_css, file.path(path, "include", "style.css"))
+  write(stripe_css, file.path(path, "include", "style.css"), append = TRUE)
+  rfiles <- system.file("quarto/R", package = "booktem")
+  file.copy(rfiles, file.path(path), recursive = TRUE)
+  images <- system.file("quarto/images", package = "booktem")
+  file.copy(images, file.path(path), recursive = TRUE)
 
-  # render book
-  xfun::in_dir(path, quarto::quarto_render(as_job = FALSE))
-  browseURL(file.path(path, "docs", "index.html"))
+  # .Rprofile ----
+  rprofpath <- file.path(path, ".Rprofile")
+  write("source(\"R/booktem_setup.R\")", file = rprofpath, append = TRUE)
+  if (df_print == "dt") {
+    write("source(\"R/dt_tables.R\")", file = rprofpath, append = TRUE)
+  }
+  if (webexercises) {
+    write("source(\"R/webex.R\")", file = rprofpath, append = TRUE)
+  }
+  write("source(\"R/my_setup.R\")", file = rprofpath, append = TRUE)
+
+  # render book ----
+  usethis::ui_todo("Rendering book...")
+  render_op <- tryCatch({
+    capture.output({
+      xfun::in_dir(path, quarto::quarto_render(as_job = FALSE))
+    })
+  },
+  error = function(e) {
+    warning(e, call. = FALSE)
+    return("")
+  })
+
+  ## check for success and show book ----
+  if (!any(grepl("Output created: docs/index.html", render_op, fixed = TRUE))) {
+    warning(render_op)
+  } else {
+    bookpath <- file.path(path, "docs", "index.html")
+    usethis::ui_done("Book project created at {normalizePath(path)}")
+    browseURL(bookpath)
+  }
+
+  if (open) usethis::proj_activate(path)
+  invisible(path)
 }

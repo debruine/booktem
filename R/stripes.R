@@ -33,9 +33,7 @@ stripes <- function(colors = c(pink   = "#983E82",
     paste(collapse = ",\n    ")
 
   css <- glue::glue(.open = "[", .close = "]",
-"/* (edit style.css for your own book styles) */
-
-/* named colours */
+"/* named colours */
 :root {\n  [clist]\n}
 
 /* rainbow borders */

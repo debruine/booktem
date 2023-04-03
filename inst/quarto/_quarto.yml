@@ -1,14 +1,16 @@
 project:
   type: book
-  output-dir: docs
+  output-dir: {output_dir}
+  resources: resources
 
 book:
   title: "{title}"
+  subtitle: "{subtitle}"
   author: "{author}"
-  #description: "{description}"
+  description: "{description}"
   cover-image: images/logos/logo.png
   image: images/logos/logo.png
-  fav-icon: images/logos/favicon.ico
+  favicon: images/logos/logo.png
   cookie-consent: false
   google-analytics: "{google_analytics}"
   page-navigation: true
@@ -25,6 +27,7 @@ book:
   # sidebar:
   #   style: docked
   #   background: light
+  margin-header: "{margin_header}"
   page-footer:
     left: "{footer}"
     right:
@@ -36,6 +39,8 @@ book:
   - index.qmd
   appendices:
   - references.qmd
+  - app-conventions.qmd
+
 
 bibliography: include/references.bib
 csl: include/apa.csl
@@ -51,8 +56,8 @@ format:
       dark:
       - {dark_theme}
       - include/dark.scss
-    css: [include/booktem.css, include/style.css]
-    df-print: kable
+    css: [include/booktem.css, include/style.css, include/webex.css]
+    df-print: {df_print}
     code-link: true
     code-fold: false
     code-line-numbers: true
@@ -61,4 +66,4 @@ format:
     highlight-style: a11y
     # monofont: Fira Code
     # mainfont: Open Sans
-    include-after-body: include/script.js
+    include-after-body: [include/webex.js, include/script.js]

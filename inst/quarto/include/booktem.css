@@ -1,64 +1,12 @@
-/* booktem default styles. Do not edit this !! */
-/* (edit style.css for your own book styles) */
+/* booktem default styles. Do not edit this unless you are sure what you're doing */
+/* (edit style.css, dark.css and light.css for your own book styles) */
 
 :root {
   --highlight: grey;
 }
 
-@media screen and (max-width: 991px) {
-  #main-nav nav {
-    width: 49%;
-    display: inline-block;
-    vertical-align: text-top;
-  }
-
-  .book-toc {
-    column-count: 1;
-  }
-
-  #content {
-    flex:0 0 100%;
-    -webkit-flex:0 0 100%;
-    max-width:100%
-  }
-}
-
-.chapter-nav .next, .chapter-nav .prev {
-  box-shadow: none;
-  border-color: var(--highlight);
-}
-
-/* references with hanging indent */
-.csl-entry {
-  padding-left: 2em ;
-  text-indent: -2em ;
-}
-
-.package { font-weight: 600; color: inherit; }
-.package::before { content: "{"; }
-.package::after { content: "}"; }
-
-.small_right, .small_left {
-  display: inline-block;
-  width: 25%;
-  max-width: 200px;
-}
-.small_right { float: right; margin: 1em 0 1em 1em;}
-.small_left { float: left; margin: 1em 1em 1em 0;}
-.small_right img, .small_left img { max-width: 100%; }
-
-img { max-width: 100%; }
-
-
-/* fix code wrap with line numbers */
-pre > code.sourceCode > span {
-  text-indent: -50px;
-  padding-left: 50px;
-}
-
-.inline-figure { border: none; }
-.quarto-cover-image { display: none; }
-
+/* style right menu on narrow screens */
+/* works with move_sidebar() in script.js */
 @media screen and (max-width: 767.98px) {
   #TOC, #quarto-sidebar .sidebar-menu-container ul.mt-1 {
     width: 49%;
@@ -69,17 +17,49 @@ pre > code.sourceCode > span {
   }
 }
 
-/* references with hanging indent */
-.csl-entry {
-  padding-left: 2em ;
-  text-indent: -2em ;
-}
-
 .cell-output code {
   white-space: pre-wrap;
   border: 1px solid grey;
   padding: 1em;
 }
+
+div.sourceCode {
+  clear: both;
+}
+
+div.sourceCode + pre:not(.sourceCode) {
+  background-color: #FBFBFB;
+  background-image: none;
+  border: 0.5px solid #BBB;
+}
+
+/* give references a hanging indent */
+.csl-entry {
+  padding-left: 2em ;
+  text-indent: -2em ;
+}
+
+
+
+img { max-width: 100%; }
+
+
+/* wrap code */
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+/* fix code wrap with line numbers */
+pre > code.sourceCode > span {
+  text-indent: -4em;
+  padding-left: 4em;
+}
+
+/* special styles */
 
 .terminal {
   background-color: #88888811;
@@ -88,43 +68,22 @@ pre > code.sourceCode > span {
   margin-bottom: 0.5em;
 }
 
-/* set styles for alert boxes */
-
-.dangerous, .warning, .info , .alert, .try {
-  padding: 1em 1em 0.25em 3.5em;
-  margin: 10px 0;
-  background-color: hsla(0, 0%, 100%, .1);
-  background-position: 0.5em 0.5em;
-  background-size: 2.5em;
-  background-repeat: no-repeat;
-  border-radius: 5px;
+if {
+  display: inline;
+  font-weight: 900;
+  font-size: 90%;
+  background-color: #00FF0011;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
 }
 
-.dangerous {
-  background-image: url("../images/alerts/danger.svg");
-  background-color: hsla(315, 42%, 42%, .10);
-  border: 1px solid var(--pink);
+pkg {
+  font-weight: 600;
+  color: inherit;
+  background-color: transparent;
 }
-
-.warning {
-  background-image: url("../images/alerts/warning.svg");
-  background-color: hsla(49, 87%, 70%, .1);
-  border: 1px solid var(--yellow);
-}
-
-.info {
-  background-image: url("../images/alerts/info.svg");
-  background-color: hsla(209, 42%, 47%, .1);
-  border: 1px solid var(--blue);
-}
-
-.try {
-  background-image: url("../images/alerts/rainbow.svg");
-  background-color: hsla(248, 28%, 48%, .1);
-  border: 1px solid var(--purple);
-  background-position: 0.5em -.25em;
-}
-
+pkg::before { content: "{"; }
+pkg::after { content: "}"; }
 
 /* verbatim code chunks with ```{r ...} at top */
 
@@ -168,13 +127,42 @@ div.verbatim pre.sourceCode {
 a[target="_blank"]::after {
   margin: 0 3px 0 5px;
   font-weight: 900;
-  font-family:"Font Awesome 5 Free";
-  content:"\f360"; /* f35d or  f360*/
+  font-family:"bootstrap-icons";
+  content:"\F1C5";
 }
 
 a.glossary::after, code a::after {
   content: none !important;
   margin: 0 !important;
+}
+
+
+/* mac and PC icons */
+mac, pc {
+  display: inline;
+  border: 1px solid;
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem 0;
+  font-family: monospace;
+  font-size: 90%;
+  white-space: nowrap;
+}
+
+mac { border-color: #a3aaae; }
+pc { border-color: #46A7E2; }
+
+mac::before, pc::before {
+  margin-right: 0.25rem;
+  font-family:"bootstrap-icons";
+}
+mac::before {
+  color: #a3aaae;
+  content:"\F65B";
+}
+
+pc::before {
+  color: #46A7E2;
+  content:"\F65E";
 }
 
 

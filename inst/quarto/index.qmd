@@ -1,7 +1,49 @@
 # Overview {.unnumbered}
 
-```{r, include = FALSE}
+Welcome to the quarto textbook template. To get started editing the book, open up the 
 
+## Settings {#sec-settings}
+
+Most of the settings are in the configuration file: <path>_quarto.yml</path>. See the [quarto documentation](https://quarto.org/docs/books/#config-file){target="_blank"} for more information. 
+
+## Tables {#sec-tables}
+
+Shorter tables and PDFs print using <pkg>kableExtra</pkg> and longer tables in HTML format use <pkg>DT</pkg> for interactive paged tables.
+
+```{r tbl-short}
+#| tbl-cap: "Shorter table"
+head(beaver1)
 ```
 
+```{r tbl-long}
+#| tbl-cap: "Longer table"
+DT::datatable(beaver1)
+```
 
+## Crossrefs {#sec-crossrefs}
+
+Internal links look like this: @sec-settings
+
+```{verbatim, lang = "md"}
+## Section Title {#sec-section-title}
+
+Internal links look like this: @sec-section-title
+```
+
+See the [quarto documentation](https://quarto.org/docs/books/book-crossrefs.html){target="_blank"} for more information.
+
+## Glossary
+
+Look up a term from the glossary file with `glossary("alpha")`: `r glossary("alpha")`
+
+Display a different value for the term with `glossary("alpha", "$\\alpha$")`: `r glossary("alpha", "$\\alpha$")`
+
+Use an inline definition instead of the glossary file with `glossary("beta", def = "The second letter of the Greek alphabet")`: `r glossary("beta", def = "The second letter of the Greek alphabet")`
+
+Just show the definition with `glossary("p-value", show_def = TRUE)`: `r glossary("p-value", show_def = TRUE)`
+
+Show the table of terms defined on this page with `glossary_table()`:
+
+```{r, echo = FALSE}
+glossary_table()
+```

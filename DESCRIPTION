@@ -23,4 +23,5 @@ Imports:
     xfun
 Suggests: 
     testthat (>= 3.0.0)
+    webexercises
 Config/testthat/edition: 3

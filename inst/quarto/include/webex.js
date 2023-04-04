@@ -7,10 +7,11 @@ update_total_correct = function() {
   console.log("webex: update total_correct");
 
   if (t = document.getElementById("webex-total_correct")) {
-    var correct = document.getElementsByClassName("webex-correct").length;
-    var solvemes = document.getElementsByClassName("webex-solveme").length;
-    var radiogroups = document.getElementsByClassName("webex-radiogroup").length;
-    var selects = document.getElementsByClassName("webex-select").length;
+    p = t.parentElement.parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
 
     t.innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
   }
@@ -25,6 +26,18 @@ b_func = function() {
     cl.remove("open");
   } else {
     cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+  } else {
+    cl.add("unchecked");
   }
 }
 
@@ -125,6 +138,10 @@ window.onload = function() {
   for (var i = 0; i < buttons.length; i++) {
     if (buttons[i].parentElement.classList.contains('webex-solution')) {
       buttons[i].onclick = b_func;
+    }
+
+    if (buttons[i].classList.contains('webex-check')) {
+      buttons[i].onclick = check_func;
     }
   }
 

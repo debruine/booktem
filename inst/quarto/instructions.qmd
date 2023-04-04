@@ -181,32 +181,3 @@ Show the table of terms defined on this page with `glossary_table()`:
 glossary_table()
 ```
 
-
-
-### Webexercises {#sec-webexercises}
-
-<!-- copy from webexercises page -->
-
-I am going to learn a lot: `r torf(TRUE)`
-
-```{r, echo=FALSE, results='asis'}
-opts <- c(
-   "the probability that the null hypothesis is true",
-   answer = "the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true",
-   "the probability of making an error in your conclusion"
-)
-
-cat("* What is a p-value?", longmcq(opts))
-```
-
-
-```{block, webex.hide="Hidden Solutions"}
-You found it!
-```
-
-<!--
-add_to_quarto() function
-
-Add button for delayed feedback 
-Fence off "Quiz Yourself"
--->

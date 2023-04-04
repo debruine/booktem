@@ -7,9 +7,30 @@
   --purple: #61589C; /* hsl(248, 28%, 48%) */
 }
 
+.unchecked {
+  border: 2px solid var(--purple);
+}
+
+.unchecked #webex-total_correct {
+  display: none;
+}
+
+.unchecked .webex-incorrect,
+.unchecked .webex-correct {
+  border: none !important;
+  background-color: inherit !important;
+}
+
+.unchecked .webex-incorrect span::before,
+.unchecked .webex-incorrect + .webex-icon::after,
+.unchecked .webex-correct span::before,
+.unchecked .webex-correct + .webex-icon::after {
+  content: "";
+}
+
 /* styles for webex-solveme */
 .webex-incorrect,
-.webex-radiogroup label.webex-incorrect{
+.webex-radiogroup label.webex-incorrect {
     border: 2px dotted var(--pink);
     background-color: #edaddd;
     border-radius: 0.25em;

@@ -37,9 +37,10 @@ book:
         href: https://twitter.com/{twitter}
   chapters:
   - index.qmd
-  - chapter1.qmd
+  - instructions.qmd
   appendices:
   - references.qmd
+  {ifelse(webexercises, "- webexercises.qmd", "")}
 
 
 bibliography: include/references.bib

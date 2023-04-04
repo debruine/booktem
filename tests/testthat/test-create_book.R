@@ -29,9 +29,13 @@ test_that("options", {
                description = "My new description",
                author = "Lisa",
                output_dir = "./",
+               webexercises = FALSE,
                render = FALSE, open = FALSE)
   bookpath <- do.call(create_book, args)
-  expect_equal(bookpath, "book")
+
+  sources <- readLines("book/.Rprofile")
+  has_webex <- any(grepl("webex.R", sources, fixed = TRUE))
+  expect_false(has_webex)
 
   # check _quarto.yml for replaced lines
   qyml <- readLines("book/_quarto.yml")
@@ -48,7 +52,7 @@ test_that("options", {
 test_that("render", {
   skip("Needs interactivity")
 
-  op <- capture_output(bookpath <- create_book(open = FALSE))
+  op <- capture_output(bookpath <- create_book(open = TRUE))
   expect_equal(bookpath, "book")
 
   # check for basic files

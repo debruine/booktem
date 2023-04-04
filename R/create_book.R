@@ -54,8 +54,9 @@ create_book <- function(path = "book",
   # checks (TODO) ----
   # prompt quarto install if not available
   # https://quarto.org/docs/get-started/
-  required_pkgs <- c(quarto = TRUE, knitr = TRUE)
-  if (webexercises) required_pkgs[webexercises] <- TRUE
+  requireNamespace("knitr")
+  requireNamespace("quarto")
+  if (webexercises) requireNamespace("webexercises")
 
   # create project -----
   usethis::ui_todo("Setting up project...")
@@ -103,6 +104,8 @@ create_book <- function(path = "book",
   }
   if (webexercises) {
     write("source(\"R/webex.R\")", file = rprofpath, append = TRUE)
+  } else {
+    unlink(file.path(path, "webexercises.qmd"))
   }
   write("source(\"R/my_setup.R\")", file = rprofpath, append = TRUE)
   usethis::ui_done("Added auxillary files")

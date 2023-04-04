@@ -22,9 +22,11 @@
 #' @param df_print how to print tables (default, kable, tibble, paged)
 #' @param webexercises whether to use webexercises for interactive exercises
 #' @param open whether to activate the new project in RStudio
+#' @param render whether to render the quarto book when opening
 #'
 #' @return sets up a project and renders the demo
 #' @export
+#' @importFrom rlang is_interactive
 #'
 create_book <- function(path = "book",
                         title = "Book Template",
@@ -47,7 +49,8 @@ create_book <- function(path = "book",
                         stripe_css = stripes(),
                         df_print = "kable",
                         webexercises = TRUE,
-                        open = rlang::is_interactive()) {
+                        open = rlang::is_interactive(),
+                        render = TRUE) {
   # checks (TODO) ----
   # prompt quarto install if not available
   # https://quarto.org/docs/get-started/
@@ -55,12 +58,8 @@ create_book <- function(path = "book",
   if (webexercises) required_pkgs[webexercises] <- TRUE
 
   # create project -----
-  usethis::ui_todo("Creating project...")
-  op <- utils::capture.output({
-    usethis::create_project(path = path,
-                            rstudio = FALSE,
-                            open = FALSE)
-  }, type = "message")
+  usethis::ui_todo("Setting up project...")
+  usethis::create_project(path = path, open = FALSE)
 
   # add content ----
   usethis::ui_todo("Adding content...")
@@ -70,12 +69,14 @@ create_book <- function(path = "book",
   template <- paste(readLines(file), collapse = "\n")
   quarto_yml <- glue::glue(template)
   write(quarto_yml, file.path(path, "_quarto.yml"))
+  usethis::ui_done("Modified _quarto.yml")
 
   ## add license ----
   if (license == "CC-BY") {
     license_op <- utils::capture.output({
       xfun::in_dir(path, usethis::use_ccby_license())
     }, type = "message")
+    usethis::ui_done("Added license")
   }
 
   ## copy qmd files ----
@@ -83,6 +84,7 @@ create_book <- function(path = "book",
                     "\\.qmd$",
                     full.names = TRUE)
   sapply(qmd, file.copy, path)
+  usethis::ui_done("Added demo files")
 
   ## includes and R directories ----
   include <- system.file("quarto/include", package = "booktem")
@@ -103,28 +105,37 @@ create_book <- function(path = "book",
     write("source(\"R/webex.R\")", file = rprofpath, append = TRUE)
   }
   write("source(\"R/my_setup.R\")", file = rprofpath, append = TRUE)
+  usethis::ui_done("Added auxillary files")
+
+  # open project in RStudio ----
+  if (open) usethis::proj_activate(path)
 
   # render book ----
-  usethis::ui_todo("Rendering book...")
-  render_op <- tryCatch({
-    capture.output({
-      xfun::in_dir(path, quarto::quarto_render(as_job = FALSE))
+  if (render) {
+    usethis::ui_todo("Rendering book...")
+    render_op <- tryCatch({
+      utils::capture.output({
+        xfun::in_dir(path, quarto::quarto_render(as_job = FALSE))
+      })
+    },
+    error = function(e) {
+      warning(e, call. = FALSE)
+      return("")
     })
-  },
-  error = function(e) {
-    warning(e, call. = FALSE)
-    return("")
-  })
 
-  ## check for success and show book ----
-  if (!any(grepl("Output created: docs/index.html", render_op, fixed = TRUE))) {
-    warning(render_op)
-  } else {
-    bookpath <- file.path(path, "docs", "index.html")
-    usethis::ui_done("Book project created at {normalizePath(path)}")
-    browseURL(bookpath)
+    ## check for success and show book ----
+    if (!any(grepl("Output created: docs/index.html", render_op, fixed = TRUE))) {
+      warning(render_op)
+    } else {
+      bookpath <- file.path(path, "docs", "index.html")
+      usethis::ui_done("Book rendered at {normalizePath(bookpath)}")
+      utils::browseURL(bookpath)
+    }
   }
 
-  if (open) usethis::proj_activate(path)
+  if (!render & !open) {
+    usethis::ui_done("Book created at {normalizePath(path)}")
+  }
+
   invisible(path)
 }

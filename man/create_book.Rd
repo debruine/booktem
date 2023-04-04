@@ -7,8 +7,10 @@
 create_book(
   path = "book",
   title = "Book Template",
+  subtitle = "Quarto Textbooks Made Easy",
   author = "Me",
-  description = "",
+  description = "Book Description",
+  output_dir = "docs",
   license = "CC-BY",
   google_analytics = "",
   twitter = "",
@@ -17,10 +19,15 @@ create_book(
   repo_actions = "edit, issue, source",
   downloads = "pdf, epub",
   sharing = "twitter, facebook, linkedin",
+  margin_header = "",
   footer = paste(license, format(Sys.Date(), "\%Y"), ",", author),
   light_theme = "flatly",
   dark_theme = "darkly",
-  stripe_css = stripes()
+  stripe_css = stripes(),
+  df_print = "kable",
+  webexercises = TRUE,
+  open = rlang::is_interactive(),
+  render = TRUE
 )
 }
 \arguments{
@@ -28,15 +35,19 @@ create_book(
 
 \item{title}{title of the book}
 
+\item{subtitle}{subtitle of the book}
+
 \item{author}{author of the book}
 
 \item{description}{short description of the book}
+
+\item{output_dir}{directory to render output to}
 
 \item{license}{what license to add (CC-BY only for now)}
 
 \item{google_analytics}{the google analytics address}
 
-\item{twitter}{the twitter adddress}
+\item{twitter}{the twitter address}
 
 \item{repo_url}{the github repo URL (e.g., "myusername/mybook")}
 
@@ -48,6 +59,8 @@ create_book(
 
 \item{sharing}{"twitter, facebook, linkedin"}
 
+\item{margin_header}{defaults to ""}
+
 \item{footer}{defaults to "license YEAR, author"}
 
 \item{light_theme}{"flatly"}
@@ -55,6 +68,14 @@ create_book(
 \item{dark_theme}{"darkly"}
 
 \item{stripe_css}{created by stripe() function}
+
+\item{df_print}{how to print tables (default, kable, tibble, paged)}
+
+\item{webexercises}{whether to use webexercises for interactive exercises}
+
+\item{open}{whether to activate the new project in RStudio}
+
+\item{render}{whether to render the quarto book when opening}
 }
 \value{
 sets up a project and renders the demo

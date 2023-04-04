@@ -1,49 +1,38 @@
 # Overview {.unnumbered}
 
-Welcome to the quarto textbook template. To get started editing the book, open up the 
+Welcome to the quarto textbook template. Customize your book setup by editing the following code. It will create a project at the specified path (e.g., the code below will create a new folder called "book" in your working directory), render the demo book in Quarto, open the book in a web browser, and open the project in a new RStudio window. 
 
-## Settings {#sec-settings}
-
-Most of the settings are in the configuration file: <path>_quarto.yml</path>. See the [quarto documentation](https://quarto.org/docs/books/#config-file){target="_blank"} for more information. 
-
-## Tables {#sec-tables}
-
-Shorter tables and PDFs print using <pkg>kableExtra</pkg> and longer tables in HTML format use <pkg>DT</pkg> for interactive paged tables.
-
-```{r tbl-short}
-#| tbl-cap: "Shorter table"
-head(beaver1)
+```{r, eval = FALSE}
+create_book(
+  path = "book",
+  title = "Book Template",
+  subtitle = "Quarto Textbooks Made Easy",
+  author = "Me",
+  description = "Book Description",
+  output_dir = "docs",
+  license = "CC-BY",
+  google_analytics = "",
+  twitter = "",
+  repo_url = "",
+  repo_branch = "main",
+  repo_actions = "edit, issue, source",
+  downloads = "pdf, epub",
+  sharing = "twitter, facebook, linkedin",
+  margin_header = "",
+  footer = paste(license, format(Sys.Date(), "%Y"), ",", author),
+  light_theme = "flatly",
+  dark_theme = "darkly",
+  stripe_css = stripes(),
+  df_print = "kable",
+  webexercises = TRUE,
+  open = rlang::is_interactive()
+)
 ```
 
-```{r tbl-long}
-#| tbl-cap: "Longer table"
-DT::datatable(beaver1)
-```
+### Configuration {#sec-config}
 
-## Crossrefs {#sec-crossrefs}
+Most of the settings are in the configuration file: <path>_quarto.yml</path>. See the [quarto documentation](https://quarto.org/docs/books/#config-file){target="_blank"} for more information.
 
-Internal links look like this: @sec-settings
+See @sec-instructions for details of how to further customize the book.
 
-```{verbatim, lang = "md"}
-## Section Title {#sec-section-title}
 
-Internal links look like this: @sec-section-title
-```
-
-See the [quarto documentation](https://quarto.org/docs/books/book-crossrefs.html){target="_blank"} for more information.
-
-## Glossary
-
-Look up a term from the glossary file with `glossary("alpha")`: `r glossary("alpha")`
-
-Display a different value for the term with `glossary("alpha", "$\\alpha$")`: `r glossary("alpha", "$\\alpha$")`
-
-Use an inline definition instead of the glossary file with `glossary("beta", def = "The second letter of the Greek alphabet")`: `r glossary("beta", def = "The second letter of the Greek alphabet")`
-
-Just show the definition with `glossary("p-value", show_def = TRUE)`: `r glossary("p-value", show_def = TRUE)`
-
-Show the table of terms defined on this page with `glossary_table()`:
-
-```{r, echo = FALSE}
-glossary_table()
-```

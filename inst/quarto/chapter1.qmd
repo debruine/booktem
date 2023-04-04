@@ -1,0 +1,212 @@
+# How to Use this Book {#sec-instructions}
+
+## Setup {#sec-setup}
+
+
+### Crossrefs {#sec-crossrefs}
+
+Internal links look like this: @sec-settings
+
+```{verbatim, lang = "md"}
+## Section Title {#sec-section-title}
+
+Internal links look like this: @sec-section-title
+```
+
+See the [quarto documentation](https://quarto.org/docs/books/book-crossrefs.html){target="_blank"} for more information.
+
+### References {#sec-refs}
+
+Zotero export - keep updated
+
+
+### Snippets {#sec-snippets}
+
+Copy these to snippets....
+
+Markdown:
+
+```
+snippet h1
+	# ${1:title} {#sec-${2:ref}}
+	
+snippet h2
+	## ${1:title} {#sec-${2:ref}}
+	
+snippet h3
+	### ${1:title} {#sec-${2:ref}}
+	
+snippet h4
+	#### ${1:title} {#sec-${2:ref}}
+	
+snippet h5
+	##### ${1:title} {#sec-${2:ref}}
+```
+
+
+## Layout {#sec-layout}
+
+### Conventions {#sec-conventions}
+
+This book will use the following conventions:
+
+* Code: `list(number = 1, letter = "A")`
+* File paths: <path>data/sales.csv</path>
+* Menu/interface options: <if>Tools > Global Options... > Pane Layout</if>
+* R Packages: <pkg>tidyverse</pkg>
+* Glossary items: `r glossary("ordinal")`
+* Citations: @usethis
+* Internal links: @sec-conventions
+* External links: [Mastering Shiny](https://mastering-shiny.org/){target="_blank"}
+* Mac-specific: <mac>Cmd-Shift-F10</mac> 
+* Windows-specific: <pc>Ctl-Shift-F10</pc>
+
+A list of mac and windows [keyboard shortcuts](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts-in-the-RStudio-IDE).
+
+
+### Figures {#sec-figures}
+
+Best practice, set a custom ggplot theme:
+
+```{r}
+library(ggplot2)
+
+theme_set(theme_bw() + 
+            theme(panel.background = element_rect(fill = "red", color = "black", size = 10))
+          )
+```
+
+
+```{r}
+ggplot(iris, aes(Sepal.Width, Petal.Width)) +
+  geom_point()
+```
+
+### Tables {#sec-tables}
+
+Shorter tables and PDFs print using <pkg>kableExtra</pkg> and longer tables in HTML format use <pkg>DT</pkg> for interactive paged tables.
+
+```{r tbl-short}
+#| tbl-cap: "Shorter table"
+head(beaver1)
+```
+
+```{r tbl-long}
+#| tbl-cap: "Longer table"
+DT::datatable(beaver1)
+```
+
+### Callout boxes {#sec-callout}
+
+[See the [quarto reference](https://quarto.org/docs/authoring/callouts.html) for more options.]{.aside}
+
+::: {.callout-note}
+Informational asides.
+:::
+
+::: {.callout-note collapse="true"}
+## Click to expand
+Expanded!
+:::
+
+::: {.callout-tip}
+Tips
+:::
+
+::: {.callout-warning}
+Notes to warn you about something.
+:::
+
+::: {.callout-caution}
+Notes about things that could cause serious errors.
+:::
+
+::: {.callout-important}
+Notes about things that are important.
+:::
+
+
+### Code and Output {#sec-code-output}
+
+```{r}
+# code chunks
+paste("Code", "Output", 1, sep = " ")
+```
+
+```{r, filename = "Filename or header"}
+# code chunks with filename
+a <- 1
+```
+
+```{r, eval = FALSE, verbatim="r, fig.width = 2, fig.height = 2"}
+# code chunks with visible headers
+hist(rnorm(100000))
+```
+
+```{verbatim, lang = "md"}
+## Markdown Example
+
+* Inline code: `r nrow(iris)`
+* *Italics*
+* **Bold**
+* [Linked text](https://psyteachr.github.io)
+```
+
+
+
+
+
+
+
+### Fonts {#sec-fonts}
+
+
+
+
+## Best Practices {#sec-best-practices}
+
+### Glossary {#sec-glossary}
+
+Look up a term from the glossary file with `glossary("alpha")`: `r glossary("alpha")`
+
+Display a different value for the term with `glossary("alpha", "$\\alpha$")`: `r glossary("alpha", "$\\alpha$")`
+
+Use an inline definition instead of the glossary file with `glossary("beta", def = "The second letter of the Greek alphabet")`: `r glossary("beta", def = "The second letter of the Greek alphabet")`
+
+Just show the definition with `glossary("p-value", show_def = TRUE)`: `r glossary("p-value", show_def = TRUE)`
+
+Show the table of terms defined on this page with `glossary_table()`:
+
+```{r, echo = FALSE}
+glossary_table()
+```
+
+
+
+### Webexercises {#sec-webexercises}
+
+<!-- copy from webexercises page -->
+
+I am going to learn a lot: `r torf(TRUE)`
+
+```{r, echo=FALSE, results='asis'}
+opts <- c(
+   "the probability that the null hypothesis is true",
+   answer = "the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true",
+   "the probability of making an error in your conclusion"
+)
+
+cat("* What is a p-value?", longmcq(opts))
+```
+
+
+```{block, webex.hide="Hidden Solutions"}
+You found it!
+```
+
+<!--
+add_to_quarto() function
+
+Add button for delayed feedback 
+Fence off "Quiz Yourself"
+-->

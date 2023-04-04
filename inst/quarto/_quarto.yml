@@ -37,9 +37,9 @@ book:
         href: https://twitter.com/{twitter}
   chapters:
   - index.qmd
+  - chapter1.qmd
   appendices:
   - references.qmd
-  - app-conventions.qmd
 
 
 bibliography: include/references.bib

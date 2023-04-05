@@ -5,13 +5,32 @@
 
 ### Crossrefs {#sec-crossrefs}
 
-Internal links look like this: @sec-settings
+Section links must start with `sec-` and look like this: @sec-snippets.
 
 ```{verbatim, lang = "md"}
 ## Section Title {#sec-section-title}
 
 Internal links look like this: @sec-section-title
 ```
+
+Figure links must start with `fig-` and look like this: @fig-poisson. 
+
+```{r fig-poisson, echo = FALSE}
+#| fig-cap: "A histogram of a Poisson distribution with lambda = 3"
+hist(rpois(1000, lambda = 3))
+```
+
+Table links must start with `tbl-` and look like this: @tbl-authors. 
+
+```{r tbl-authors, echo = FALSE}
+#| tbl-cap: "The authors of this book"
+
+data.frame(
+  first_name = c("Lisa", "Daniël"),
+  last_name = c("DeBruine", "Lakens")
+)
+```
+
 
 See the [quarto documentation](https://quarto.org/docs/books/book-crossrefs.html){target="_blank"} for more information.
 
@@ -22,11 +41,19 @@ Zotero export - keep updated
 
 ### Snippets {#sec-snippets}
 
-Copy these to snippets....
+Snippets in RStudio provide shortcuts to syntax. For example, in an RMarkdown document, type "r" and shift-tab to expand a code chunk.
 
-Markdown:
+You can add your own snippets. Under the **`Tools`** menu, choose **`Edit Code Snippets...`** and paste the following text into the end of the appropriate sections.
+
+#### Markdown
 
 ```
+snippet gls
+	r glossary("${1:term}")
+	
+snippet gls2
+	r glossary("${1:term}", "${2:display})
+	
 snippet h1
 	# ${1:title} {#sec-${2:ref}}
 	
@@ -66,20 +93,26 @@ A list of mac and windows [keyboard shortcuts](https://support.posit.co/hc/en-us
 
 ### Figures {#sec-figures}
 
-Best practice, set a custom ggplot theme:
+It is best practice to set a custom ggplot theme at the top of your script, then each subsequent plot will use that theme. Start with a built-in theme and then add any tweaks with the `theme()` function.
 
 ```{r}
 library(ggplot2)
 
-theme_set(theme_bw() + 
-            theme(panel.background = element_rect(fill = "red", color = "black", size = 10))
-          )
+my_theme <- theme_minimal(base_size = 16) + 
+            theme(panel.background = element_rect(fill = "red", 
+                                                  color = "black", 
+                                                  size = 5),
+                  panel.grid = element_blank())
+theme_set(my_theme)
 ```
 
 
-```{r}
-ggplot(iris, aes(Sepal.Width, Petal.Width)) +
-  geom_point()
+```{r fig-diamonds}
+#| fig-cap: "Demographic information of midwest counties from 2000 US census"
+#| fig-asp: 1
+ggplot(midwest, aes(popdensity, percollege)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Population Density", y = "Percent College Educated")
 ```
 
 ### Tables {#sec-tables}

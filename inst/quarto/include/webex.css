@@ -7,18 +7,28 @@
   --purple: #61589C; /* hsl(248, 28%, 48%) */
 }
 
-.unchecked {
-  border: 2px solid var(--purple);
+.webex-check {}
+
+.webex-box {
+  border: 2px solid var(--blue);
+  padding: 0.5em 0.25em;
+  margin: 1em 0;
+  border-radius: .25em;
+  background-color: rgba(127, 127, 127, 0.05);
 }
 
-.unchecked #webex-total_correct {
+.webex-total_correct {
+  margin-left: 1em;
+}
+
+.unchecked .webex-total_correct {
   display: none;
 }
 
 .unchecked .webex-incorrect,
 .unchecked .webex-correct {
-  border: none !important;
-  background-color: inherit !important;
+  border: 2px dotted grey !important;
+  background-color: white !important;
 }
 
 .unchecked .webex-incorrect span::before,
@@ -29,16 +39,28 @@
 }
 
 /* styles for webex-solveme */
+.webex-select, input.webex-solveme,
+.unchecked .webex-radiogroup label.webex-incorrect,
+.unchecked .webex-radiogroup label.webex-correct{
+    border: 2px dotted grey;
+    background-color: white;
+    border-radius: 0.25em;
+}
+
 .webex-incorrect,
+input.webex-solveme.webex-incorrect,
 .webex-radiogroup label.webex-incorrect {
     border: 2px dotted var(--pink);
     background-color: #edaddd;
+    color: black;
     border-radius: 0.25em;
 }
 .webex-correct,
+input.webex-solveme.webex-correct,
 .webex-radiogroup label.webex-correct {
     border: 2px solid var(--green);
     background-color: #c0edc2;
+    color: black;
     border-radius: 0.25em;
 }
 
@@ -65,7 +87,7 @@
     border: 2px solid var(--blue);
     border-radius: 5px;
 }
-.webex-solution button {
+.webex-solution button, .webex-check-button {
     height: 2em;
     margin-bottom: 0.5em;
     border-radius: 0.5em;
@@ -83,7 +105,8 @@
   padding-left: 0.5em;
   font-weight: 400;
   display: block;
-  border: 2px solid rgba(255, 255, 255, 1);
+  border: 2px solid rgba(255, 255, 255, 0);
+  background-color: inherit;
   border-radius: 0.25em;
 }
 

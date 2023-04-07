@@ -1,5 +1,15 @@
 #' Create a Template Book
 #'
+#' Set up a book by creating a project at the specified path, rendering the demo book in Quarto, opening the book in a web browser, and opening the project in a new RStudio window.
+#'
+#' The argument `socials` adds linked icons to the right footer. See the available icons at <https://icons.getbootstrap.com/> E.g.:
+#'
+#' ```
+#' list(mastodon = "https://tech.lgbt/@debruine",
+#'      github = "https://github.com/debruine",
+#'      twitter = "https://twitter.com/lisadebruine")
+#' ````
+#'
 #' @param path path to the location for your book on your machine
 #' @param title title of the book
 #' @param subtitle subtitle of the book
@@ -8,7 +18,7 @@
 #' @param output_dir directory to render output to
 #' @param license what license to add (CC-BY only for now)
 #' @param google_analytics the google analytics address
-#' @param twitter the twitter address
+#' @param socials a list of social media URLs to put in the footer, named as a relevant icon (see Details)
 #' @param repo_url the github repo URL (e.g., "myusername/mybook")
 #' @param repo_branch the branch to use (usually "main" or "master")
 #' @param repo_actions github repo links to add to the right sidebar
@@ -16,9 +26,9 @@
 #' @param sharing "twitter, facebook, linkedin"
 #' @param margin_header defaults to ""
 #' @param footer defaults to "license YEAR, author"
-#' @param light_theme "flatly"
+#' @param light_theme "flatly" (see https://quarto.org/docs/output-formats/html-themes.html)
 #' @param dark_theme "darkly"
-#' @param stripe_css created by stripe() function
+#' @param css custom styles (e.g., `stripes()` creates the signature PsyTeachR rainbow stripes)
 #' @param df_print how to print tables (default, kable, tibble, paged)
 #' @param webexercises whether to use webexercises for interactive exercises
 #' @param open whether to activate the new project in RStudio
@@ -30,13 +40,13 @@
 #'
 create_book <- function(path = "book",
                         title = "Book Template",
-                        subtitle = "Quarto Textbooks Made Easy",
+                        subtitle = "",
                         author = "Me",
                         description = "Book Description",
                         output_dir = "docs",
                         license = "CC-BY",
                         google_analytics = "",
-                        twitter = "",
+                        socials = list(),
                         repo_url = "",
                         repo_branch = "main",
                         repo_actions = "edit, issue, source",
@@ -46,15 +56,17 @@ create_book <- function(path = "book",
                         footer = paste(license, format(Sys.Date(), "%Y"), ",", author),
                         light_theme = "flatly",
                         dark_theme = "darkly",
-                        stripe_css = stripes(),
+                        css = stripes(),
                         df_print = "kable",
                         webexercises = TRUE,
                         open = rlang::is_interactive(),
                         render = TRUE) {
-  # checks (TODO) ----
-  # prompt quarto install if not available
-  # https://quarto.org/docs/get-started/
+  # checks ----
   requireNamespace("knitr")
+  # prompt quarto install if not available
+  if (!nzchar(Sys.which("quarto"))) {
+    stop("Quarto isn't installed, see https://quarto.org/docs/get-started/")
+  }
   requireNamespace("quarto")
   if (webexercises) requireNamespace("webexercises")
 
@@ -66,6 +78,9 @@ create_book <- function(path = "book",
   usethis::ui_todo("Adding content...")
 
   ## create _quarto.yml ----
+  social_links <- glue::glue("\n      - icon: {names(socials)}\n        href: {socials}", .trim = FALSE) |>
+    paste(collapse = "")
+
   file <- system.file("quarto", "_quarto.yml", package = "booktem")
   template <- paste(readLines(file), collapse = "\n")
   quarto_yml <- glue::glue(template)
@@ -90,7 +105,7 @@ create_book <- function(path = "book",
   ## includes and R directories ----
   include <- system.file("quarto/include", package = "booktem")
   file.copy(include, file.path(path), recursive = TRUE)
-  write(stripe_css, file.path(path, "include", "style.css"), append = TRUE)
+  write(css, file.path(path, "include", "style.css"), append = TRUE)
   rfiles <- system.file("quarto/R", package = "booktem")
   file.copy(rfiles, file.path(path), recursive = TRUE)
   images <- system.file("quarto/images", package = "booktem")

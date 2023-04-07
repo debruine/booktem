@@ -70,6 +70,12 @@ snippet h5
 	##### ${1:title} {#sec-${2:ref}}
 ```
 
+### Customize
+
+#### Page Footer
+
+The default footer includes license YEAR, author, and github and twitter icons, but you can customize this in the _quarto.yml file under `page-footer:`. See  th e[quarto documentation](https://quarto.org/docs/reference/projects/websites.html#footer) for more options. See the available icons at <https://icons.getbootstrap.com/>.
+
 
 ## Layout {#sec-layout}
 

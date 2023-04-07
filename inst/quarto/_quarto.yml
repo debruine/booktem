@@ -2,6 +2,8 @@ project:
   type: book
   output-dir: {output_dir}
   resources: resources
+execute:
+  freeze: auto # re-reder only changed chapters
 
 book:
   title: "{title}"
@@ -30,11 +32,7 @@ book:
   margin-header: "{margin_header}"
   page-footer:
     left: "{footer}"
-    right:
-      - icon: github
-        href: https://github.com/{repo_url}
-      - icon: twitter
-        href: https://twitter.com/{twitter}
+    right: {social_links}
   chapters:
   - index.qmd
   - instructions.qmd

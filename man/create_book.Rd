@@ -7,13 +7,13 @@
 create_book(
   path = "book",
   title = "Book Template",
-  subtitle = "Quarto Textbooks Made Easy",
+  subtitle = "",
   author = "Me",
   description = "Book Description",
   output_dir = "docs",
   license = "CC-BY",
   google_analytics = "",
-  twitter = "",
+  socials = list(),
   repo_url = "",
   repo_branch = "main",
   repo_actions = "edit, issue, source",
@@ -23,7 +23,7 @@ create_book(
   footer = paste(license, format(Sys.Date(), "\%Y"), ",", author),
   light_theme = "flatly",
   dark_theme = "darkly",
-  stripe_css = stripes(),
+  css = stripes(),
   df_print = "kable",
   webexercises = TRUE,
   open = rlang::is_interactive(),
@@ -47,7 +47,7 @@ create_book(
 
 \item{google_analytics}{the google analytics address}
 
-\item{twitter}{the twitter address}
+\item{socials}{a list of social media URLs to put in the footer, named as a relevant icon (see Details)}
 
 \item{repo_url}{the github repo URL (e.g., "myusername/mybook")}
 
@@ -63,11 +63,11 @@ create_book(
 
 \item{footer}{defaults to "license YEAR, author"}
 
-\item{light_theme}{"flatly"}
+\item{light_theme}{"flatly" (see https://quarto.org/docs/output-formats/html-themes.html)}
 
 \item{dark_theme}{"darkly"}
 
-\item{stripe_css}{created by stripe() function}
+\item{css}{custom styles (e.g., \code{stripes()} creates rainbow stripes)}
 
 \item{df_print}{how to print tables (default, kable, tibble, paged)}
 
@@ -81,5 +81,13 @@ create_book(
 sets up a project and renders the demo
 }
 \description{
-Create a Template Book
+Set up a book by creating a project at the specified path, rendering the demo book in Quarto, opening the book in a web browser, and opening the project in a new RStudio window.
+}
+\details{
+The argument \code{socials} adds linked icons to the right footer. See the available icons at \url{https://icons.getbootstrap.com/} E.g.:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{list(mastodon = "https://tech.lgbt/@debruine",
+     github = "https://github.com/debruine",
+     twitter = "https://twitter.com/lisadebruine")
+}\if{html}{\out{</div>}}
 }

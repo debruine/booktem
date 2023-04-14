@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://debruine.github.io/booktem/404.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/articles/webex.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/authors.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/index.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/reference/create_book.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/reference/rmd2qmd.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/reference/stripes.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/reference/update_headers.html</loc>
+  </url>
+</urlset>

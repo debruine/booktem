@@ -10,5 +10,5 @@ update_headers(path = "./")
 \item{path}{Path to the directory that contains your .qmd files}
 }
 \description{
-Update headers to quarto style
+Replaces all headers of the style "# title {#label}" with "# title {#sec-label}" and all "\@ref(label)" with "@sec-label" and all "](#label)" with "](#sec-label)".
 }

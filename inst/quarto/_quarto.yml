@@ -3,7 +3,7 @@ project:
   output-dir: {output_dir}
   resources: resources
 execute:
-  freeze: auto # re-reder only changed chapters
+  freeze: false # re-render only changed chapters
 
 book:
   title: "{title}"
@@ -43,8 +43,6 @@ book:
 
 bibliography: include/references.bib
 csl: include/apa.csl
-nocite: |
-  @*
 
 format:
   html:

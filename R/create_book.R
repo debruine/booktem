@@ -68,6 +68,11 @@ create_book <- function(path = "book",
     stop("Quarto isn't installed, see https://quarto.org/docs/get-started/")
   }
   requireNamespace("quarto")
+  version <- quarto::quarto_version()
+  if (version < "1.3.56") {
+    message("You might want to update quarto to version 1.3.56 or later to avoid some bugs with the bibliography files, see https://quarto.org/docs/get-started/")
+  }
+
   if (webexercises) requireNamespace("webexercises")
 
   # create project -----
@@ -80,6 +85,7 @@ create_book <- function(path = "book",
   ## create _quarto.yml ----
   social_links <- glue::glue("\n      - icon: {names(socials)}\n        href: {socials}", .trim = FALSE) |>
     paste(collapse = "")
+  if (social_links == "") social_links <- '""'
 
   file <- system.file("quarto", "_quarto.yml", package = "booktem")
   template <- paste(readLines(file), collapse = "\n")

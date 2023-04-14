@@ -67,7 +67,7 @@ create_book(
 
 \item{dark_theme}{"darkly"}
 
-\item{css}{custom styles (e.g., \code{stripes()} creates rainbow stripes)}
+\item{css}{custom styles (e.g., \code{stripes()} creates the signature PsyTeachR rainbow stripes)}
 
 \item{df_print}{how to print tables (default, kable, tibble, paged)}
 

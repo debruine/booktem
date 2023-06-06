@@ -52,7 +52,7 @@ snippet gls
 	r glossary("${1:term}")
 	
 snippet gls2
-	r glossary("${1:term}", "${2:display})
+	r glossary("${1:term}", "${2:display}")
 	
 snippet h1
 	# ${1:title} {#sec-${2:ref}}
@@ -74,7 +74,7 @@ snippet h5
 
 #### Page Footer
 
-The default footer includes license YEAR, author, and github and twitter icons, but you can customize this in the _quarto.yml file under `page-footer:`. See  th e[quarto documentation](https://quarto.org/docs/reference/projects/websites.html#footer) for more options. See the available icons at <https://icons.getbootstrap.com/>.
+The default footer includes license YEAR, author, and github and twitter icons, but you can customize this in the _quarto.yml file under `page-footer:`. See  the [quarto documentation](https://quarto.org/docs/reference/projects/websites.html#footer) for more options. See the available icons at <https://icons.getbootstrap.com/>.
 
 
 ## Layout {#sec-layout}
@@ -87,7 +87,7 @@ This book will use the following conventions:
 * File paths: <path>data/sales.csv</path>
 * Menu/interface options: <if>Tools > Global Options... > Pane Layout</if>
 * R Packages: <pkg>tidyverse</pkg>
-* Glossary items: `r glossary("ordinal")`
+* Glossary items: `r glossary("alpha")`
 * Citations: @usethis
 * Internal links: @sec-conventions
 * External links: [Mastering Shiny](https://mastering-shiny.org/){target="_blank"}
@@ -99,7 +99,9 @@ A list of mac and windows [keyboard shortcuts](https://support.posit.co/hc/en-us
 
 ### Figures {#sec-figures}
 
-It is best practice to set a custom ggplot theme at the top of your script, then each subsequent plot will use that theme. Start with a built-in theme and then add any tweaks with the `theme()` function.
+It is best practice to set a custom ggplot theme, then each subsequent plot will use that theme. You can put this code in <path>R/my_setup.R</path> after loading <pkg>ggplot2</pkg>.
+
+Start with a built-in theme and then add any tweaks with the `theme()` function.
 
 ```{r}
 library(ggplot2)
@@ -137,31 +139,31 @@ DT::datatable(beaver1)
 
 ### Callout boxes {#sec-callout}
 
-[See the [quarto reference](https://quarto.org/docs/authoring/callouts.html) for more options.]{.aside}
+See the [quarto reference](https://quarto.org/docs/authoring/callouts.html) for more options.]{.aside}
 
 ::: {.callout-note}
-Informational asides.
+.callout-note: Informational asides.
 :::
 
 ::: {.callout-note collapse="true"}
 ## Click to expand
-Expanded!
+colapse = "true": Expanded!
 :::
 
 ::: {.callout-tip}
-Tips
+.callout-tip: Tips
 :::
 
 ::: {.callout-warning}
-Notes to warn you about something.
+.callout-warning: Notes to warn you about something.
 :::
 
 ::: {.callout-caution}
-Notes about things that could cause serious errors.
+.callout-caution: Notes about things that could cause serious errors.
 :::
 
 ::: {.callout-important}
-Notes about things that are important.
+.callout-important: Notes about things that are important.
 :::
 
 
@@ -193,10 +195,6 @@ hist(rnorm(100000))
 
 
 
-
-
-
-
 ### Fonts {#sec-fonts}
 
 
@@ -206,7 +204,16 @@ hist(rnorm(100000))
 
 ### Glossary {#sec-glossary}
 
-Books are set up with some lightweight glossary functions. Edit the file `include/glossary.yml` with your glossary terms like this:
+Books are set up with lightweight glossary functions from the [glossary](https://debruine.github.io/glossary/) package. 
+
+```{r}
+# code in R/my_setup.R to initialise the glossary on each page
+library(glossary)
+glossary_path("include/glossary.yml")
+glossary_popup("click") # "click", "hover" or "none"
+```
+
+Edit the file `glossary.yml` with your glossary terms like this:
 
 ``` yaml
 alpha: |
@@ -221,7 +228,7 @@ Display a different value for the term with `glossary("alpha", "$\\alpha$")`: `r
 
 Use an inline definition instead of the glossary file with `glossary("beta", def = "The second letter of the Greek alphabet")`: `r glossary("beta", def = "The second letter of the Greek alphabet")`
 
-Just show the definition with `glossary("p-value", show_def = TRUE)`: `r glossary("p-value", show_def = TRUE)`
+Just show the definition with `glossary("p-value", show = "def")`: `r glossary("p-value", show = "def")`
 
 Show the table of terms defined on this page with `glossary_table()`:
 

@@ -131,12 +131,6 @@ a[target="_blank"]::after {
   content:"\F1C5";
 }
 
-a.glossary::after, code a::after {
-  content: none !important;
-  margin: 0 !important;
-}
-
-
 /* mac and PC icons */
 mac, pc {
   display: inline;

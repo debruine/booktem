@@ -4,6 +4,8 @@ unlink("book", recursive = TRUE) # clean up
 
 test_that("norender", {
   op <- capture_output(bookpath <- create_book(render = FALSE, open = FALSE))
+  on.exit(unlink("book", recursive = TRUE)) # clean up
+
   expect_equal(bookpath, "book")
 
   # check for basic files
@@ -17,10 +19,8 @@ test_that("norender", {
   # check _quarto.yml for replaced lines
   qyml <- readLines("book/_quarto.yml")
   expect_true(any(grepl("  output-dir: docs", qyml)))
-  expect_true(any(grepl("  title: \"Book Template\"", qyml)))
-  expect_true(any(grepl("  author: \"Me\"", qyml)))
-
-  unlink("book", recursive = TRUE) # clean up
+  expect_true(any(grepl("  title: \"?Book Template\"?", qyml)))
+  expect_true(any(grepl("  author: \"?Me\"?", qyml)))
 })
 
 test_that("options", {
@@ -32,6 +32,7 @@ test_that("options", {
                webexercises = FALSE,
                render = FALSE, open = FALSE)
   bookpath <- do.call(create_book, args)
+  on.exit(unlink("book", recursive = TRUE)) # clean up
 
   sources <- readLines("book/.Rprofile")
   has_webex <- any(grepl("webex.R", sources, fixed = TRUE))
@@ -40,12 +41,10 @@ test_that("options", {
   # check _quarto.yml for replaced lines
   qyml <- readLines("book/_quarto.yml")
   expect_true(any(grepl(glue::glue("  output-dir: {args$output_dir}"), qyml)))
-  expect_true(any(grepl(glue::glue("  title: \"{args$title}\""), qyml)))
-  expect_true(any(grepl(glue::glue("  subtitle: \"{args$subtitle}\""), qyml)))
-  expect_true(any(grepl(glue::glue("  description: \"{args$description}\""), qyml)))
-  expect_true(any(grepl(glue::glue("  author: \"{args$author}\""), qyml)))
-
-  unlink("book", recursive = TRUE) # clean up
+  expect_true(any(grepl(glue::glue("  title: \"?{args$title}\"?"), qyml)))
+  expect_true(any(grepl(glue::glue("  subtitle: \"?{args$subtitle}\"?"), qyml)))
+  expect_true(any(grepl(glue::glue("  description: \"?{args$description}\"?"), qyml)))
+  expect_true(any(grepl(glue::glue("  author: \"?{args$author}\"?"), qyml)))
 })
 
 
@@ -53,6 +52,8 @@ test_that("render", {
   skip("Needs interactivity")
 
   op <- capture_output(bookpath <- create_book(open = TRUE))
+  on.exit(unlink("book", recursive = TRUE)) # clean up
+
   expect_equal(bookpath, "book")
 
   # check for basic files
@@ -66,8 +67,6 @@ test_that("render", {
   expected <- c("include", "index.html", "references.html",
                 "search.json", "site_libs")
   expect_true(all(expected %in% bookfiles))
-
-  unlink("book", recursive = TRUE) # clean up
 })
 
 

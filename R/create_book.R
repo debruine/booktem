@@ -111,6 +111,9 @@ create_book <- function(path = "book",
   ## includes and R directories ----
   include <- system.file("quarto/include", package = "booktem")
   file.copy(include, file.path(path), recursive = TRUE)
+  gstyle <- utils::capture.output(glossary::glossary_style())
+  gstyle <- gstyle[2:(length(gstyle)-1)]
+  write(gstyle, file.path(path, "include", "glossary.css"))
   write(css, file.path(path, "include", "style.css"), append = TRUE)
   rfiles <- system.file("quarto/R", package = "booktem")
   file.copy(rfiles, file.path(path), recursive = TRUE)
@@ -124,9 +127,10 @@ create_book <- function(path = "book",
     write("source(\"R/dt_tables.R\")", file = rprofpath, append = TRUE)
   }
   if (webexercises) {
-    write("source(\"R/webex.R\")", file = rprofpath, append = TRUE)
-  } else {
-    unlink(file.path(path, "webexercises.qmd"))
+    suppressMessages(
+    webexercises::add_to_quarto(quarto_dir = path,
+                                include_dir = file.path(path, "include"))
+    )
   }
   write("source(\"R/my_setup.R\")", file = rprofpath, append = TRUE)
   usethis::ui_done("Added auxillary files")

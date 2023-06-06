@@ -1,6 +1,7 @@
 Package: booktem
 Title: Methods Book Template
-Version: 0.0.0.9001
+Date: 2023-05-19
+Version: 0.0.0.9002
 Authors@R: 
     person(given = "Lisa",
            family = "DeBruine",
@@ -22,9 +23,12 @@ Imports:
     utils,
     usethis,
     xfun,
-    webexercises
-Suggests: 
+    webexercises (>= 1.1.0),
+    glossary,
     knitr,
+    kableExtra
+Suggests: 
+    covr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr

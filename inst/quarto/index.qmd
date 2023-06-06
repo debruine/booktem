@@ -6,13 +6,13 @@ Welcome to the quarto textbook template. Customize your book setup by editing th
 create_book(
   path = "book",
   title = "Book Template",
-  subtitle = "Quarto Textbooks Made Easy",
+  subtitle = "",
   author = "Me",
   description = "Book Description",
   output_dir = "docs",
   license = "CC-BY",
   google_analytics = "",
-  twitter = "",
+  socials = list(),
   repo_url = "",
   repo_branch = "main",
   repo_actions = "edit, issue, source",
@@ -22,10 +22,11 @@ create_book(
   footer = paste(license, format(Sys.Date(), "%Y"), ",", author),
   light_theme = "flatly",
   dark_theme = "darkly",
-  stripe_css = stripes(),
+  css = stripes(),
   df_print = "kable",
   webexercises = TRUE,
-  open = rlang::is_interactive()
+  open = rlang::is_interactive(),
+  render = TRUE
 )
 ```
 

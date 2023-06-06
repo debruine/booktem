@@ -3,7 +3,7 @@ project:
   output-dir: {output_dir}
   resources: resources
 execute:
-  freeze: false # re-render only changed chapters
+  freeze: auto # re-render only changed chapters
 
 book:
   title: "{title}"
@@ -53,7 +53,11 @@ format:
       dark:
       - {dark_theme}
       - include/dark.scss
-    css: [include/booktem.css, include/style.css, include/webex.css]
+    css:
+    - https://use.fontawesome.com/releases/v5.13.0/css/all.css
+    - include/booktem.css
+    - include/glossary.css
+    - include/style.css
     df-print: {df_print}
     code-link: true
     code-fold: false
@@ -63,4 +67,4 @@ format:
     highlight-style: a11y
     # monofont: Fira Code
     # mainfont: Open Sans
-    include-after-body: [include/webex.js, include/script.js]
+    include-after-body: [include/script.js]

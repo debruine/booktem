@@ -1,0 +1,19 @@
+---
+title: "Setup"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Setup}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+1. Install booktem
+  - `devtools::install_github("debruine/booktem")`
+  - if you don't have devtools, `install.packages("devtools")`

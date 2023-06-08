@@ -1,6 +1,6 @@
 on:
   push:
-    branches: main
+    branches: [main, master]
 
 name: Render and Publish
 
@@ -28,7 +28,7 @@ jobs:
           use-public-rspm: true
 
       - name: Set up R dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
+        uses: r-lib/actions/setup-renv@v2
 
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2

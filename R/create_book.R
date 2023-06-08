@@ -33,6 +33,7 @@
 #' @param webexercises whether to use webexercises for interactive exercises
 #' @param open whether to activate the new project in RStudio
 #' @param render whether to render the quarto book when opening
+#' @param github_pages whether to set up github actions for rendering to github pages
 #'
 #' @return sets up a project and renders the demo
 #' @export
@@ -60,7 +61,8 @@ create_book <- function(path = "book",
                         df_print = "kable",
                         webexercises = TRUE,
                         open = rlang::is_interactive(),
-                        render = TRUE) {
+                        render = TRUE,
+                        github_pages = FALSE) {
   # checks ----
   requireNamespace("knitr")
   # prompt quarto install if not available
@@ -73,6 +75,7 @@ create_book <- function(path = "book",
     message("You might want to update quarto to version 1.3.56 or later to avoid some bugs with the bibliography files, see https://quarto.org/docs/get-started/")
   }
 
+  requireNamespace("glossary")
   if (webexercises) requireNamespace("webexercises")
 
   # create project -----
@@ -116,9 +119,9 @@ create_book <- function(path = "book",
   write(gstyle, file.path(path, "include", "glossary.css"))
   write(css, file.path(path, "include", "style.css"), append = TRUE)
   rfiles <- system.file("quarto/R", package = "booktem")
-  file.copy(rfiles, file.path(path), recursive = TRUE)
+  file.copy(rfiles, path, recursive = TRUE)
   images <- system.file("quarto/images", package = "booktem")
-  file.copy(images, file.path(path), recursive = TRUE)
+  file.copy(images, path, recursive = TRUE)
 
   # .Rprofile ----
   rprofpath <- file.path(path, ".Rprofile")
@@ -133,6 +136,20 @@ create_book <- function(path = "book",
     )
   }
   write("source(\"R/my_setup.R\")", file = rprofpath, append = TRUE)
+
+  # set up github pages ----
+  if (github_pages) {
+    usethis::use_git()
+    usethis::use_github()
+    usethis::use_github_pages()
+    gfiles <- system.file("quarto/.github", package = "booktem")
+    file.copy(gfiles,
+              file.path(path),
+              recursive = TRUE)
+    usethis::use_build_ignore(".github")
+    usethis::ui_done("Set up github pages")
+  }
+
   usethis::ui_done("Added auxillary files")
 
   # open project in RStudio ----

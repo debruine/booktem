@@ -2,51 +2,53 @@ project:
   type: book
   output-dir: docs
   resources: resources
+
 execute:
   freeze: auto # re-render only changed chapters
 
 book:
   title: Book
-  subtitle: ~
-  author: ~
-  doi: ~
+  subtitle: ""
+  author: ""
+  doi: ""
   license: CC-BY 4.0
-  description: ~
+  description: ""
   cover-image: images/logos/logo.png
   image: images/logos/logo.png
   favicon: images/logos/logo.png
   cookie-consent: false
-  google-analytics: ~
+  google-analytics: ""
   page-navigation: true
   search: true
   # comments:
   #   hypothesis:
   #     theme: clean
   #     openSidebar: false
-  downloads: ~
-  sharing: ~
+  downloads: []
+  sharing: []
   sidebar:
-    title: ~
-    logo: ~
+    title: ""
+    logo: ""
     search: true
-    contents: ~
+    contents: ""
     style: floating
-    background: ~
-    foreground: ~
+    background: light
+    foreground: dark
     border: true
     alignment: left
     collapse-level: 3
     pinned: true
     header: ""
     footer: ""
-  margin-header: ~
+  margin-header: ""
   page-footer:
-    left: ~
-    right: ~
+    left: ""
+    right: ""
   chapters:
   - index.qmd
   - instructions.qmd
   appendices:
+  - webexercises.qmd
   - references.qmd
 
 
@@ -65,6 +67,7 @@ format:
     css:
     - https://use.fontawesome.com/releases/v5.13.0/css/all.css
     - include/booktem.css
+    - include/webex.css
     - include/glossary.css
     - include/style.css
     df-print: kable
@@ -74,6 +77,6 @@ format:
     code-overflow: wrap
     code-copy: hover
     highlight-style: a11y
-    mainfont: ~
-    monofont: ~
-    include-after-body: [include/script.js]
+    mainfont: ""
+    monofont: ""
+    include-after-body: [include/webex.js, include/script.js]

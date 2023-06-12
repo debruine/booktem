@@ -30,10 +30,6 @@ create_book(
 )
 ```
 
-### Configuration {#sec-config}
-
-Most of the settings are in the configuration file: <path>_quarto.yml</path>. See the [quarto documentation](https://quarto.org/docs/books/#config-file){target="_blank"} for more information.
-
 See @sec-instructions for details of how to further customize the book.
 
 

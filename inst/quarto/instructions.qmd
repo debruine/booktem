@@ -1,7 +1,132 @@
 # How to Use this Book {#sec-instructions}
 
+```{r, include = FALSE}
+source("R/booktem_setup.R")
+source("R/my_setup.R")
+```
+
+
 ## Setup {#sec-setup}
 
+### Install booktem
+
+``` r
+# install.packages("devtools")
+devtools::install_github("debruine/booktem")
+```
+
+### Quarto Options
+
+The file `_quarto.yml` contains various options that you can set to change the format and look of your book.
+
+#### Project Options
+
+The `project` key defines the inputs and outputs for the book ([quarto reference](https://quarto.org/docs/reference/projects/books.html#project)).
+
+::: {.callout-note collapse="true"}
+## project key
+
+``` yaml
+project:
+  type: book
+  output-dir: docs
+  resources: resources 
+```
+:::
+
+The `output-dir` key defines the directory where the rendered web files will be saved. This is set to `docs` in order to be compatible with [GitHub Pages](https://pages.github.com/), but you can change this if you are working with a different repository that expects the web files to be in a different directory.
+
+The `resources` key specifies a directory that is copied verbatim to the output directory. This is where you should put, for example, data files that you want to make accessible online (sometimes they don't automatically copy over when linked).
+
+#### Book Options
+
+The `book` key defines options that affect the look and function of the book ([quarto reference](https://quarto.org/docs/reference/projects/books.html#section)).
+
+::: {.callout-note collapse="true"}
+## book key
+
+``` yaml
+book:
+  title: Book
+  subtitle: ~
+  author: ~
+  doi: ~
+  license: CC-BY 4.0
+  description: ~
+  cover-image: images/logos/logo.png
+  image: images/logos/logo.png
+  favicon: images/logos/logo.png
+  cookie-consent: false
+  google-analytics: ~
+  page-navigation: true
+  search: true
+  # comments:
+  #   hypothesis:
+  #     theme: clean
+  #     openSidebar: false
+  downloads: ~
+  sharing: ~
+  sidebar:
+    title: ~
+    logo: ~
+    search: true
+    contents: ~
+    style: floating
+    background: ~
+    foreground: ~
+    border: true
+    alignment: left
+    collapse-level: 3
+    pinned: true
+    header: ""
+    footer: ""
+  margin-header: ~
+  page-footer:
+    left: ~
+    right: ~
+  chapters:
+  - index.qmd
+  - instructions.qmd
+  appendices:
+  - references.qmd
+```
+:::
+
+#### html Options
+
+The `format` key defines options for specific formats, such as html or pdf. We'll only be using html here ([quarto reference](https://quarto.org/docs/reference/formats/html.html#format-options)).
+
+::: {.callout-note collapse="true"}
+## format:html key
+
+``` yaml
+format:
+  html:
+    theme:
+      light:
+      - flatly
+      - include/light.scss
+      dark:
+      - darkly
+      - include/dark.scss
+    css:
+    - https://use.fontawesome.com/releases/v5.13.0/css/all.css
+    - include/booktem.css
+    - include/glossary.css
+    - include/style.css
+    df-print: kable
+    code-link: true
+    code-fold: false
+    code-line-numbers: true
+    code-overflow: wrap
+    code-copy: hover
+    highlight-style: a11y
+    mainfont: ~
+    monofont: ~
+    include-after-body: [include/script.js]
+
+```
+:::
 
 ### Crossrefs {#sec-crossrefs}
 
@@ -200,7 +325,7 @@ hist(rnorm(100000))
 
 
 
-## Best Practices {#sec-best-practices}
+## Extras {#sec-extras}
 
 ### Glossary {#sec-glossary}
 
@@ -234,5 +359,20 @@ Show the table of terms defined on this page with `glossary_table()`:
 
 ```{r, echo = FALSE}
 glossary_table()
+```
+
+### FontAwesome
+
+The [fontAwesome quarto extension](https://github.com/quarto-ext/fontawesome) allows you to use the [free icons](https://fontawesome.com/search?m=free) with syntax like:
+
+```
+{{< fa dragon >}}
+{{< fa brands github size = 5x title="(github logo)" >}}
+```
+
+To install it, just run this code in the Terminal pane of RStudio (not the Console pane).
+
+``` bash
+quarto install extension quarto-ext/fontawesome
 ```
 

@@ -1,0 +1,16 @@
+{
+  "hash": "2afe9082fdba804975b7481d066a0816",
+  "result": {
+    "markdown": "# Overview {.unnumbered}\n\nWelcome to the quarto textbook template. Customize your book setup by editing the following code. It will create a project at the specified path (e.g., the code below will create a new folder called \"book\" in your working directory), render the demo book in Quarto, open the book in a web browser, and open the project in a new RStudio window. \n\n\n::: {.cell}\n\n```{.r .cell-code}\ncreate_book(\n  path = \"book\",\n  title = \"Book Template\",\n  subtitle = \"\",\n  author = \"Me\",\n  description = \"Book Description\",\n  output_dir = \"docs\",\n  license = \"CC-BY\",\n  google_analytics = \"\",\n  socials = list(),\n  repo_url = \"\",\n  repo_branch = \"main\",\n  repo_actions = \"edit, issue, source\",\n  downloads = \"pdf, epub\",\n  sharing = \"twitter, facebook, linkedin\",\n  margin_header = \"\",\n  footer = paste(license, format(Sys.Date(), \"%Y\"), \",\", author),\n  light_theme = \"flatly\",\n  dark_theme = \"darkly\",\n  css = stripes(),\n  df_print = \"kable\",\n  webexercises = TRUE,\n  open = rlang::is_interactive(),\n  render = TRUE\n)\n```\n:::\n\n\nSee @sec-instructions for details of how to further customize the book.\n\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

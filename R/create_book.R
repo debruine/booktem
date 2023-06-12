@@ -2,6 +2,13 @@
 #'
 #' Set up a book by creating a project at the specified path, rendering the demo book in Quarto, opening the book in a web browser, and opening the project in a new RStudio window.
 #'
+#' The argument `authors` can be text or a structured list, e.g.:
+#'
+#' ```
+#' list(c("Lisa M.", "DeBruine", "0000-0002-7523-5539"),
+#'      c("Daniel", "Lakens", "0000-0002-0247-239X"))
+#' ```
+#'
 #' The argument `socials` adds linked icons to the right footer. See the available icons at <https://icons.getbootstrap.com/> E.g.:
 #'
 #' ```
@@ -13,19 +20,16 @@
 #' @param path path to the location for your book on your machine
 #' @param title title of the book
 #' @param subtitle subtitle of the book
-#' @param author author of the book
+#' @param authors authors of the book (see Details)
 #' @param description short description of the book
 #' @param output_dir directory to render output to
 #' @param license what license to add (CC-BY only for now)
 #' @param google_analytics the google analytics address
 #' @param socials a list of social media URLs to put in the footer, named as a relevant icon (see Details)
-#' @param repo_url the github repo URL (e.g., "myusername/mybook")
-#' @param repo_branch the branch to use (usually "main" or "master")
-#' @param repo_actions github repo links to add to the right sidebar
 #' @param downloads download types to include
 #' @param sharing "twitter, facebook, linkedin"
 #' @param margin_header defaults to ""
-#' @param footer defaults to "license YEAR, author"
+#' @param footer defaults to "license (YEAR) author"
 #' @param light_theme "flatly" (see https://quarto.org/docs/output-formats/html-themes.html)
 #' @param dark_theme "darkly"
 #' @param css custom styles (e.g., `stripes()` creates the signature PsyTeachR rainbow stripes)
@@ -33,7 +37,6 @@
 #' @param webexercises whether to use webexercises for interactive exercises
 #' @param open whether to activate the new project in RStudio
 #' @param render whether to render the quarto book when opening
-#' @param github_pages whether to set up github actions for rendering to github pages
 #'
 #' @return sets up a project and renders the demo
 #' @export
@@ -42,7 +45,7 @@
 create_book <- function(path = "book",
                         title = "Book Template",
                         subtitle = "",
-                        author = "Me",
+                        authors = "Me",
                         description = "Book Description",
                         output_dir = "docs",
                         license = "CC-BY",
@@ -54,15 +57,16 @@ create_book <- function(path = "book",
                         downloads = "pdf, epub",
                         sharing = "twitter, facebook, linkedin",
                         margin_header = "",
-                        footer = paste(license, format(Sys.Date(), "%Y"), ",", author),
+                        footer = paste0(license, " (",
+                                        format(Sys.Date(), "%Y"),
+                                        ") ", author),
                         light_theme = "flatly",
                         dark_theme = "darkly",
                         css = stripes(),
                         df_print = "kable",
                         webexercises = TRUE,
                         open = rlang::is_interactive(),
-                        render = TRUE,
-                        github_pages = FALSE) {
+                        render = TRUE) {
   # checks ----
   requireNamespace("knitr")
   # prompt quarto install if not available
@@ -85,15 +89,60 @@ create_book <- function(path = "book",
   # add content ----
   usethis::ui_todo("Adding content...")
 
-  ## create _quarto.yml ----
-  social_links <- glue::glue("\n      - icon: {names(socials)}\n        href: {socials}", .trim = FALSE) |>
-    paste(collapse = "")
-  if (social_links == "") social_links <- '""'
+  # sort out authors ----
+  alist <- list()
+  if (is.list(authors)) {
+    # authors as list, e.g.,
+    # authors <- list(c("Lisa", "DeBruine"), c("Daniel", "Lakens"))
+    alist <- lapply(authors, function(a) {
+      do.call(author, as.list(a))
+    })
+    auth_txt_list <- sapply(alist, function(a) {
+      trimws(paste(a$name$given, a$name$family))
+    })
+    auth_txt <- comma_and(auth_txt_list)
 
+  } else if (length(authors) > 1) {
+    # single author as vector, e.g.,
+    # authors <- c("Lisa", "DeBruine")
+    alist <- do.call(author, as.list(authors))
+    auth_txt <- paste(alist$name$given, alist$name$family)
+  } else {
+    # authors as text, e.g.,
+    # authors <- "Lisa DeBruine & Daniel Lakens"
+    alist <- authors
+    auth_txt <- authors
+  }
+
+  ## create _quarto.yml ----
   file <- system.file("quarto", "_quarto.yml", package = "booktem")
-  template <- paste(readLines(file), collapse = "\n")
-  quarto_yml <- glue::glue(template)
-  write(quarto_yml, file.path(path, "_quarto.yml"))
+  yml <- yaml::read_yaml(file)
+
+  yml$project$`output-dir` = output_dir
+
+  yml$book$title = title
+  yml$book$subtitle = subtitle
+  yml$book$author = alist
+  yml$book$decription = decription
+  yml$book$license = license
+  yml$book$`google-analytics` = google_analytics
+  yml$book$downloads = downloads
+  yml$book$sharing = sharing
+  yml$book$`page-footer` = footer
+  yml$book$`margin-header` = margin_header
+
+  yml$format$html$`df-print` <- df_print
+  yml$format$html$theme$light[[1]] <- light_theme
+  yml$format$html$theme$dark[[1]] <- dark_theme
+
+  if (length(socials) > 0) {
+    social_links <- lapply(names(socials), function(icon) {
+      list(icon = icon, href = socials[[icon]])
+    })
+    yml$book$`page-footer`$right <- social_links
+  }
+
+  write_yaml(quarto_yml, file.path(path, "_quarto.yml"))
   usethis::ui_done("Modified _quarto.yml")
 
   ## add license ----
@@ -137,19 +186,6 @@ create_book <- function(path = "book",
   }
   write("source(\"R/my_setup.R\")", file = rprofpath, append = TRUE)
 
-  # set up github pages ----
-  if (github_pages) {
-    usethis::use_git()
-    usethis::use_github()
-    usethis::use_github_pages()
-    gfiles <- system.file("quarto/.github", package = "booktem")
-    file.copy(gfiles,
-              file.path(path),
-              recursive = TRUE)
-    usethis::use_build_ignore(".github")
-    usethis::ui_done("Set up github pages")
-  }
-
   usethis::ui_done("Added auxillary files")
 
   # open project in RStudio ----
@@ -183,4 +219,56 @@ create_book <- function(path = "book",
   }
 
   invisible(path)
+}
+
+
+#' List to Text
+#'
+#' Convert a list or vector to text with human-readable separators, e.g., "A, B & C".
+#'
+#' @param x The list or vector to convert
+#' @param comma The text to use to separate all but the last item
+#' @param and The text to use to separate the last item
+#' @param oxford Whether to use an oxford comma before the last item
+#'
+#' @return A character string
+#' @export
+#'
+#' @examples
+#' comma_and(LETTERS[1:5])
+#' comma_and(LETTERS[1:5], and = " and ")
+#' comma_and(LETTERS[1:5], comma = "; ")
+#'
+#' # change and to use an oxford comma
+#' my_list <- list("Nelson Mandela",
+#'                 "an 800-year-old demigod",
+#'                 "a dildo collector")
+#' comma_and(my_list) # probably not what you mean
+#' comma_and(my_list, oxford = TRUE)
+comma_and <- function(x, comma = ", ", and = " & ", oxford = FALSE) {
+  if (length(x) == 1) {
+    txt <- x
+  } else {
+    last <- x[length(x)]
+    first <- paste(x[1:(length(x)-1)], collapse = comma)
+    if (oxford) and <- gsub(" +", " ", paste0(comma, and))
+    txt <- paste0(first, and, last)
+  }
+
+  return(txt)
+}
+
+
+#' Write yaml with fixed logical values
+#'
+#' @param x the object to be converted
+#' @param file either a character string naming a file or a connection open for writing
+write_yaml <- function(x, file) {
+  yaml::write_yaml(x, file, handlers = list(
+    logical = function(x) {
+      result <- ifelse(x, "true", "false")
+      class(result) <- "verbatim"
+      return(result)
+    }
+  ))
 }

@@ -1,44 +1,53 @@
 project:
   type: book
-  output-dir: {output_dir}
+  output-dir: docs
   resources: resources
 execute:
   freeze: auto # re-render only changed chapters
 
 book:
-  title: "{title}"
-  subtitle: "{subtitle}"
-  author: "{author}"
-  description: "{description}"
+  title: Book
+  subtitle: ~
+  author: ~
+  doi: ~
+  license: CC-BY 4.0
+  description: ~
   cover-image: images/logos/logo.png
   image: images/logos/logo.png
   favicon: images/logos/logo.png
   cookie-consent: false
-  google-analytics: "{google_analytics}"
+  google-analytics: ~
   page-navigation: true
   search: true
   # comments:
   #   hypothesis:
   #     theme: clean
   #     openSidebar: false
-  repo-url: https://github.com/{repo_url}
-  repo-branch: {repo_branch}
-  repo-actions: [{repo_actions}]
-  downloads: [{downloads}]
-  sharing: [{sharing}]
-  # sidebar:
-  #   style: docked
-  #   background: light
-  margin-header: "{margin_header}"
+  downloads: ~
+  sharing: ~
+  sidebar:
+    title: ~
+    logo: ~
+    search: true
+    contents: ~
+    style: floating
+    background: ~
+    foreground: ~
+    border: true
+    alignment: left
+    collapse-level: 3
+    pinned: true
+    header: ""
+    footer: ""
+  margin-header: ~
   page-footer:
-    left: "{footer}"
-    right: {social_links}
+    left: ~
+    right: ~
   chapters:
   - index.qmd
   - instructions.qmd
   appendices:
   - references.qmd
-  {ifelse(webexercises, "- webexercises.qmd", "")}
 
 
 bibliography: include/references.bib
@@ -48,23 +57,23 @@ format:
   html:
     theme:
       light:
-      - {light_theme}
+      - flatly
       - include/light.scss
       dark:
-      - {dark_theme}
+      - darkly
       - include/dark.scss
     css:
     - https://use.fontawesome.com/releases/v5.13.0/css/all.css
     - include/booktem.css
     - include/glossary.css
     - include/style.css
-    df-print: {df_print}
+    df-print: kable
     code-link: true
     code-fold: false
     code-line-numbers: true
     code-overflow: wrap
     code-copy: hover
     highlight-style: a11y
-    # monofont: Fira Code
-    # mainfont: Open Sans
+    mainfont: ~
+    monofont: ~
     include-after-body: [include/script.js]

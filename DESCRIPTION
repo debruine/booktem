@@ -3,11 +3,17 @@ Title: Methods Book Template
 Date: 2023-05-19
 Version: 0.0.0.9002
 Authors@R: 
-    person(given = "Lisa",
+    c(person(given = "Lisa",
            family = "DeBruine",
            role = c("aut", "cre"),
            email = "debruine@gmail.com",
-           comment = c(ORCID = "0000-0002-7523-5539"))
+           comment = c(ORCID = "0000-0002-7523-5539")),
+     person(given = "Daniël",
+           family = "Lakens",
+           role = c("aut"),
+           email = "lakens@gmail.com",
+           comment = c(ORCID = "0000-0002-0247-239X"))
+    )
 Description: Creates a template quarto project for a methods book.
 License: CC BY 4.0
 Encoding: UTF-8

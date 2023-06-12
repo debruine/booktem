@@ -17,3 +17,13 @@ knitr::opts_chunk$set(
 1. Install booktem
   - `devtools::install_github("debruine/booktem")`
   - if you don't have devtools, `install.packages("devtools")`
+
+## quarto.yml
+
+### Book options
+
+https://quarto.org/docs/reference/projects/books.html
+
+### html options
+
+https://quarto.org/docs/reference/formats/html.html#format-options

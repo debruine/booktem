@@ -51,15 +51,12 @@ create_book <- function(path = "book",
                         license = "CC-BY",
                         google_analytics = "",
                         socials = list(),
-                        repo_url = "",
-                        repo_branch = "main",
-                        repo_actions = "edit, issue, source",
-                        downloads = "pdf, epub",
-                        sharing = "twitter, facebook, linkedin",
+                        downloads = c("pdf", "epub"),
+                        sharing = c("twitter", "facebook", "linkedin"),
                         margin_header = "",
                         footer = paste0(license, " (",
                                         format(Sys.Date(), "%Y"),
-                                        ") ", author),
+                                        ") ", authors),
                         light_theme = "flatly",
                         dark_theme = "darkly",
                         css = stripes(),
@@ -123,7 +120,7 @@ create_book <- function(path = "book",
   yml$book$title = title
   yml$book$subtitle = subtitle
   yml$book$author = alist
-  yml$book$decription = decription
+  yml$book$description = description
   yml$book$license = license
   yml$book$`google-analytics` = google_analytics
   yml$book$downloads = downloads
@@ -142,7 +139,7 @@ create_book <- function(path = "book",
     yml$book$`page-footer`$right <- social_links
   }
 
-  write_yaml(quarto_yml, file.path(path, "_quarto.yml"))
+  write_yaml(yml, file.path(path, "_quarto.yml"))
   usethis::ui_done("Modified _quarto.yml")
 
   ## add license ----

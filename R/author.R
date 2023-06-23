@@ -55,8 +55,8 @@
 #'   roles = c("Conceptualization", "Methodology"),
 #'   email = "debruine@gmail.com",
 #'   affiliation = list(
-#'     name: University of Glasgow
-#'     department: School of Psychology & Neuroscience
+#'     name = "University of Glasgow",
+#'     department = "School of Psychology & Neuroscience"
 #'   )
 #' )
 author <- function(given, family, orcid = NULL, roles = c(), ...) {
@@ -183,10 +183,7 @@ check_orcid <- function(orcid) {
   baseDigits <- gsub("[^0-9X]", "", orcid)
 
   if (nchar(baseDigits) != 16) {
-    if (sv_opts("verbose")) {
-      warning("The ORCiD ", orcid, " is not valid.")
-    }
-    return(FALSE)
+    warning("The ORCiD ", orcid, " is not valid.")
   }
 
   total <- 0
@@ -205,10 +202,7 @@ check_orcid <- function(orcid) {
           substr(baseDigits, 13, 16),
           sep = "-")
   } else {
-    if (sv_opts("verbose")) {
-      warning("The ORCiD ", orcid, " is not valid.")
-    }
-    return(FALSE)
+    warning("The ORCiD ", orcid, " is not valid.")
   }
 }
 

@@ -8,19 +8,16 @@ create_book(
   path = "book",
   title = "Book Template",
   subtitle = "",
-  author = "Me",
+  authors = "Me",
   description = "Book Description",
   output_dir = "docs",
   license = "CC-BY",
   google_analytics = "",
   socials = list(),
-  repo_url = "",
-  repo_branch = "main",
-  repo_actions = "edit, issue, source",
-  downloads = "pdf, epub",
-  sharing = "twitter, facebook, linkedin",
+  downloads = c("pdf", "epub"),
+  sharing = c("twitter", "facebook", "linkedin"),
   margin_header = "",
-  footer = paste(license, format(Sys.Date(), "\%Y"), ",", author),
+  footer = paste0(license, " (", format(Sys.Date(), "\%Y"), ") ", authors),
   light_theme = "flatly",
   dark_theme = "darkly",
   css = stripes(),
@@ -37,7 +34,7 @@ create_book(
 
 \item{subtitle}{subtitle of the book}
 
-\item{author}{author of the book}
+\item{authors}{authors of the book (see Details)}
 
 \item{description}{short description of the book}
 
@@ -49,19 +46,13 @@ create_book(
 
 \item{socials}{a list of social media URLs to put in the footer, named as a relevant icon (see Details)}
 
-\item{repo_url}{the github repo URL (e.g., "myusername/mybook")}
-
-\item{repo_branch}{the branch to use (usually "main" or "master")}
-
-\item{repo_actions}{github repo links to add to the right sidebar}
-
 \item{downloads}{download types to include}
 
 \item{sharing}{"twitter, facebook, linkedin"}
 
 \item{margin_header}{defaults to ""}
 
-\item{footer}{defaults to "license YEAR, author"}
+\item{footer}{defaults to "license (YEAR) author"}
 
 \item{light_theme}{"flatly" (see https://quarto.org/docs/output-formats/html-themes.html)}
 
@@ -84,6 +75,12 @@ sets up a project and renders the demo
 Set up a book by creating a project at the specified path, rendering the demo book in Quarto, opening the book in a web browser, and opening the project in a new RStudio window.
 }
 \details{
+The argument \code{authors} can be text or a structured list, e.g.:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{list(c("Lisa M.", "DeBruine", "0000-0002-7523-5539"),
+     c("Daniel", "Lakens", "0000-0002-0247-239X"))
+}\if{html}{\out{</div>}}
+
 The argument \code{socials} adds linked icons to the right footer. See the available icons at \url{https://icons.getbootstrap.com/} E.g.:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{list(mastodon = "https://tech.lgbt/@debruine",

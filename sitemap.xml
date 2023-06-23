@@ -13,10 +13,31 @@
     <loc>https://debruine.github.io/booktem/index.html</loc>
   </url>
   <url>
+    <loc>https://debruine.github.io/booktem/reference/author.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/reference/booktem.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/reference/check_orcid.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/reference/comma_and.html</loc>
+  </url>
+  <url>
     <loc>https://debruine.github.io/booktem/reference/create_book.html</loc>
   </url>
   <url>
+    <loc>https://debruine.github.io/booktem/reference/credit_roles.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/reference/get_orcid.html</loc>
+  </url>
+  <url>
     <loc>https://debruine.github.io/booktem/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/reference/pipe.html</loc>
   </url>
   <url>
     <loc>https://debruine.github.io/booktem/reference/rmd2qmd.html</loc>
@@ -26,5 +47,8 @@
   </url>
   <url>
     <loc>https://debruine.github.io/booktem/reference/update_headers.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/booktem/reference/write_yaml.html</loc>
   </url>
 </urlset>

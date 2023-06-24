@@ -2,7 +2,7 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles: {}
-last_built: 2023-06-23T12:44Z
+last_built: 2023-06-24T07:12Z
 urls:
   reference: https://debruine.github.io/booktem/reference
   article: https://debruine.github.io/booktem/articles

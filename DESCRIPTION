@@ -1,7 +1,7 @@
 Package: booktem
 Title: Methods Book Template
-Date: 2023-06-23
-Version: 0.0.0.9003
+Date: 2023-06-24
+Version: 0.0.0.9004
 Authors@R: 
     c(person(given = "Lisa",
            family = "DeBruine",

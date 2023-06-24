@@ -19,6 +19,17 @@ devtools::install_github("debruine/booktem")
 
 The file `_quarto.yml` contains various options that you can set to change the format and look of your book.
 
+#### Language Options
+
+There is some default text for things like the "authors" list and "table of contents" that might need translations. Set the `lang` key to the 2-letter language code for your language.
+
+You can make a [custom translation](https://quarto.org/docs/authoring/language.html#custom-translations) by translating the values in the `include/_language.yml` file. 
+
+``` yaml
+lang: en
+# language: include/_language.yml
+```
+
 #### Project Options
 
 The `project` key defines the inputs and outputs for the book ([quarto reference](https://quarto.org/docs/reference/projects/books.html#project)).

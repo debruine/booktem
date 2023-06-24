@@ -1,3 +1,6 @@
+lang: en
+# language: include/_language.yml
+
 project:
   type: book
   output-dir: docs

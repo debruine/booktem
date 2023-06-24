@@ -52,7 +52,7 @@ stripe_css <- stripes(stripe_colors, height = 10)
 
 create_book(path = "demobook", 
             title = "My Demo Book",
-            author = "My Name",
+            authors = "My Name",
             css = stripe_css)
 ```
 

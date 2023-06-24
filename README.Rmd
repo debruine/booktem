@@ -39,7 +39,7 @@ library(booktem)
 
 create_book(path = "demobook", 
             title = "My Demo Book",
-            author = "My Name")
+            authors = "My Name")
 ```
 
 Set up a custom red, white and blue stripe on the top of the book (instead of the psyTeachR rainbow stripe).

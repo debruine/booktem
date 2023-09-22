@@ -79,6 +79,8 @@ create_book <- function(path = "book",
   requireNamespace("glossary")
   if (webexercises) requireNamespace("webexercises")
 
+  path <- path.expand(path)
+
   # create project -----
   usethis::ui_todo("Setting up project...")
   usethis::create_project(path = path, open = FALSE)
@@ -178,8 +180,7 @@ create_book <- function(path = "book",
   if (webexercises) {
     suppressMessages(
     webexercises::add_to_quarto(quarto_dir = path,
-                                include_dir = file.path(path, "include"))
-    )
+                                include_dir = "include"))
   }
   write("source(\"R/my_setup.R\")", file = rprofpath, append = TRUE)
 

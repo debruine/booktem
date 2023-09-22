@@ -261,17 +261,12 @@ ggplot(midwest, aes(popdensity, percollege)) +
 
 ### Tables {#sec-tables}
 
-Shorter tables and PDFs print using <pkg>kableExtra</pkg> and longer tables in HTML format use <pkg>DT</pkg> for interactive paged tables.
 
-```{r tbl-short}
-#| tbl-cap: "Shorter table"
+```{r tbl}
+#| tbl-cap: "Beavers"
 head(beaver1)
 ```
 
-```{r tbl-long}
-#| tbl-cap: "Longer table"
-DT::datatable(beaver1)
-```
 
 ### Callout boxes {#sec-callout}
 
